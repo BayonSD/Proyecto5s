@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Vista Bodeguero</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bienvenido, Bodeguero <%= empleado_id %></h1>
+    <h2>Pedidos Pendientes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Pedido</th>
+                <th>Producto</th>
+                <th>Usuario</th>
+                <th>Sucursal</th>
+                <th>Método de Pago</th>
+                <th>Opción de Entrega</th>
+                <th>Dirección</th>
+                <th>Estado</th>
+                <th>Total</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% pedidos.forEach(pedido => { %>
+                <tr>
+                    <td><%= pedido.order_id %></td>
+                    <td><%= pedido.nombre_producto %></td>
+                    <td><%= pedido.nombre_usuario %></td>
+                    <td><%= pedido.nombre_sucursal %></td>
+                    <td><%= pedido.payment_method %></td>
+                    <td><%= pedido.delivery_option %></td>
+                    <td><%= pedido.direccion_envio %></td>
+                    <td><%= pedido.estado %></td>
+                    <td><%= pedido.total %></td>
+                    <td>
+                        <form action="/bodeguero/updatePedido/<%= pedido.order_id %>" method="POST">
+                            <input type="hidden" name="estado" value="COMPLETADO">
+                            <input type="hidden" name="empleado_id" value="<%= empleado_id %>">
+                            <button type="submit">Marcar como Completado</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Empleados</title>
+</head>
+<body>
+    <h1>Lista de Empleados</h1>
+
+    <% if (login) { %>
+        <p>Bienvenido, <%= name %> | <a href="/logout">Cerrar sesión</a></p>
+    <% } %>
+
+    <!-- Formulario para agregar nuevo empleado -->
+    <h2>Agregar Nuevo Empleado</h2>
+    <form action="/employee" method="POST">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" required><br>
+        
+        <label for="lastname">Apellido:</label>
+        <input type="text" id="lastname" name="lastname" required><br>
+        
+        <label for="age">Edad:</label>
+        <input type="number" id="age" name="age" required><br>
+        
+        <label for="country">País:</label>
+        <input type="text" id="country" name="country" required><br>
+        
+        <label for="job">Cargo:</label>
+        <input type="text" id="job" name="job" required><br>
+        
+        <label for="experience">Experiencia (en años):</label>
+        <input type="number" id="experience" name="experience" required><br>
+
+        <!-- Agrega campo para rut y user_type_id si es necesario -->
+        <label for="rut">RUT:</label>
+        <input type="text" id="rut" name="rut" required><br>
+
+        <label for="user_type_id">Tipo de Usuario:</label>
+        <select id="user_type_id" name="user_type_id" required>
+            <% userTypes.forEach(userType => { %>
+                <option value="<%= userType.id_user_types %>"><%= userType.type %></option>
+            <% }) %>
+        </select><br>
+
+        <button type="submit">Agregar Empleado</button>
+    </form>
+
+    <!-- Lista de empleados -->
+    <h2>Empleados</h2>
+    <ul>
+        <% employees.forEach(employee => { %>
+            <li>
+                <%= employee.name %> <%= employee.lastname %> | 
+                Edad: <%= employee.age %> | 
+                País: <%= employee.country %> | 
+                Cargo: <%= employee.job %> | 
+                Experiencia: <%= employee.experience %> años | 
+                RUT: <%= employee.rut %> | 
+                Tipo de Usuario: <%= employee.user_type_id %>
+
+                <!-- Botones para editar y eliminar cada empleado -->
+                <form action="/employee/<%= employee.id %>?_method=PUT" method="POST" style="display: inline;">
+                    <button type="submit">Editar</button>
+                </form>
+
+                <form action="/employee/<%= employee.id %>?_method=DELETE" method="POST" style="display: inline;">
+                    <button type="submit">Eliminar</button>
+                </form>
+            </li>
+        <% }) %>
+    </ul>
+</body>
+</html>

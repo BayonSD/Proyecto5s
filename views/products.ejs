@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/css/style.css">
+    <link rel="stylesheet" href="resources/css/navbar.css"> 
+</head>
+<body>
+    <%- include('navbar') %>
+    <div class="container">
+        <h1 class="my-4">Productos</h1>
+        <% if (products && products.length) { %>
+            <div class="row">
+                <% products.forEach(product => { %>
+                    <div class="col-md-4">
+                        <div class="card product-card">
+                            <img src="<%= product.imagen_url %>" class="card-img-top" alt="<%= product.nombre_producto %>">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= product.nombre_producto %></h5>
+                                <p class="card-text">$<%= product.precio %></p>
+                                <a href="/producto/<%= product.product_id %>" class="btn btn-primary">Ver Detalles</a>
+                                <form action="/add-to-cart" method="POST">
+                                    <input type="hidden" name="user_id" value="<%= user_id %>">
+                                    <input type="hidden" name="product_id" value="<%= product.product_id %>">
+                                    <input type="number" name="quantity" value="1" min="1" max="<%= product.stock %>" required>
+                                    
+                                    <label for="id_sucursal">Seleccione sucursal:</label>
+                                    <select name="id_sucursal" id="id_sucursal" required>
+                                        <option value="" disabled selected>Seleccione una sucursal</option>
+                                        <% sucursales.forEach(sucursal => { %>
+                                            <option value="<%= sucursal.id_sucursal %>"><%= sucursal.nombre_sucursal %></option>
+                                        <% }) %>
+                                    </select>
+
+                                    <button type="submit" class="btn btn-success">Añadir al Carrito</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <p>No hay productos disponibles.</p>
+        <% } %>
+    </div>
+</body>
+</html>

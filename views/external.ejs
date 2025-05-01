@@ -1,0 +1,31 @@
+<!-- views/productos/external.ejs -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos Externos</title>
+</head>
+<body>
+    <h1>Productos Externos</h1>
+    
+    <% if (externalProducts.length > 0) { %>
+        <ul>
+            <% externalProducts.forEach(product => { %>
+                <li>
+                    <strong><%= product.nombre_producto %></strong>
+                    <p><%= product.descripcion_producto %></p>
+                    <p>Stock: <%= product.stock %></p>
+                    <p>Precio: <%= product.precio %></p>
+                    <img src="<%= product.imagen %>" alt="<%= product.nombre_producto %>">
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>No hay productos externos disponibles.</p>
+    <% } %>
+
+    <a href="/productos/addexterno">Agregar Producto Externo</a>
+</body>
+</html>

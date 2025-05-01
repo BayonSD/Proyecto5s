@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Types</title>
+</head>
+<body>
+    <h1>User Types</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% userTypes.forEach(userType => { %>
+                <tr>
+                    <td><%= userType.id_user_types %></td>
+                    <td><%= userType.type %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

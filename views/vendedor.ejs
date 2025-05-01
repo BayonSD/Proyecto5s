@@ -1,0 +1,113 @@
+<!-- vendedor.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Pedidos - Vendedor/Encargado</title>
+    <style>
+        /* Estilos CSS (puedes personalizar según tus necesidades) */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .btn {
+            display: inline-block;
+            background: #007bff;
+            color: #fff;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Lista de Pedidos - Vendedor/Encargado</h2>
+        <% if (cartOrders.length > 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pedido ID</th>
+                        <th>Usuario ID</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                        <th>Sucursal</th>
+                        <th>Dirección de Envío</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% cartOrders.forEach(order => { %>
+                        <tr>
+                            <td><%= order.order_id %></td>
+                            <td><%= order.user_id %></td>
+                            <td><%= order.nombre_producto %></td>
+                            <td><%= order.quantity %></td>
+                            <td>$ <%= order.total.toFixed(2) %></td>
+                            <td><%= order.estado %></td>
+                            <td><%= order.nombre_sucursal %></td>
+                            <td><%= order.direccion_envio %></td>
+                            <td>
+                                <% if (order.estado === 'PENDIENTE') { %>
+                                    <form action="/updateOrderStatus/<%= order.order_id %>" method="POST">
+                                        <input type="hidden" name="_method" value="PUT">
+                                        <div>
+                                            <label for="estado">Estado:</label>
+                                            <select name="estado" id="estado">
+                                                <option value="ACEPTADO">ACEPTADO</option>
+                                                <option value="RECHAZADO">RECHAZADO</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <button type="submit" class="btn">Actualizar Estado</button>
+                                        </div>
+                                    </form>
+                                <% } else { %>
+                                    <span>Acción no disponible</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>No hay pedidos pendientes.</p>
+        <% } %>
+        <a href="/">Volver al Inicio</a>
+    </div>
+</body>
+</html>
