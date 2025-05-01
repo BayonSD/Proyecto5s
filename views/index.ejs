@@ -3,41 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="resources/css/style.css">
-    <link rel="stylesheet" href="resources/css/navbar.css"> 
-    <link rel="stylesheet" href="resources/css/index.css"> <!-- Incluye los estilos específicos de index -->
+    <title>Inicio</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/navbar.css"> 
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
-    <% include('navbar') %>
+    <%- include('navbar') %>
     <div class="container">
         <% if (login) { %>
             <h1>El Usuario conectado es: <strong><%= name %></strong></h1>
-            <a href="logout" class="a-logout">LogOut</a>
-            <a href="cart">Ver Carrito</a> <!-- Nuevo enlace para ir al carrito -->
+            <a href="/logout" class="a-logout">LogOut</a>
+            <a href="/cart">Ver Carrito</a>
         <% } else { %>
             <h1><%= name %></h1>
-            <a href="login" class="a-Login">Ir al Login</a>
+            <a href="/login" class="a-Login">Ir al Login</a>
         <% } %>
-        <a href="products">Ver productos</a>
-        <a href="profile">perfil</a>
+        <a href="/products">Ver productos</a>
+        <a href="/profile">perfil</a>
     </div>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-    <% if(typeof alert != "undefined") { %>
+    <% if (typeof alert !== "undefined") { %>
         <script>
             Swal.fire({
-                title: '<%=alertTitle%>',
-                text: '<%=alertMessage %>',
-                icon: '<%= alertIcon%>',
-                showConfirmButton: <%= ShowConfirmButton%>,
-                timer: <%=timer %>
-            }).then(()=>{
-                window.location='/<%= ruta%>'
-            })
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= ShowConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => {
+                window.location = '/<%= ruta %>';
+            });
         </script>
     <% } %>
-
 </body>
 </html>
