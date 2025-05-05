@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/navbar.css"> 
+</head>
+<body>
+    <%- include('navbar') %>
+
+    <div class="container">
+        <h1 class="my-4">Productos</h1>
+
+        <% if (productos && productos.length) { %>
+            <div class="row">
+                <% productos.forEach(producto => { %>
+                    <div class="col-md-4">
+                        <div class="card product-card mb-4">
+                            <img src="<%= producto.imagen %>" class="card-img-top" alt="<%= producto.nombre_producto %>">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= producto.nombre_producto %></h5>
+                                <p class="card-text">$<%= producto.precio %></p>
+                                <a href="/producto/<%= producto.product_id %>" class="btn btn-primary mb-2">Ver Detalles</a>
+
+                                <form action="/add-to-cart" method="POST">
+                                    <input type="hidden" name="user_id" value="<%= user_id %>">
+                                    <input type="hidden" name="product_id" value="<%= producto.product_id %>">
+                                    
+                                    <div class="mb-2">
+                                        <label for="quantity_<%= producto.product_id %>">Cantidad:</label>
+                                        <input type="number" id="quantity_<%= producto.product_id %>" name="quantity" value="1" min="1" max="<%= producto.stock %>" required>
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <label for="id_sucursal_<%= producto.product_id %>">Sucursal:</label>
+                                        <select name="id_sucursal" id="id_sucursal_<%= producto.product_id %>" required>
+                                            <option value="" disabled selected>Seleccione una sucursal</option>
+                                            <% sucursales.forEach(sucursal => { %>
+                                                <option value="<%= sucursal.id_sucursal %>"><%= sucursal.nombre_sucursal %></option>
+                                            <% }) %>
+                                        </select>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-success">Añadir al Carrito</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <p>No hay productos disponibles.</p>
+        <% } %>
+    </div>
+</body>
+</html>

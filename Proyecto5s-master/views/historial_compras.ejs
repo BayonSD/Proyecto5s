@@ -1,0 +1,45 @@
+<!-- historial_compras.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Compras</title>
+    <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Historial de Compras</h1>
+        <% if (login && orders && orders.length > 0) { %>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID de Pedido</th>
+                        <th>Fecha del Pedido</th>
+                        <th>ID de Producto</th>
+                        <th>Nombre del Producto</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% orders.forEach(order => { %>
+                        <tr>
+                            <td><%= order.order_id %></td>
+                            <td><%= order.order_date.toISOString().slice(0, 10) %></td>
+                            <td><%= order.product_id %></td>
+                            <td><%= order.product_name %></td> <!-- Asumiendo que tienes un nombre de producto en la tabla de productos -->
+                            <td><%= order.quantity %></td>
+                            <td>$ <%= order.total %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>No se encontraron pedidos en el historial.</p>
+        <% } %>
+        <a href="/">Volver al inicio</a>
+    </div>
+</body>
+</html>

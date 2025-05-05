@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sucursales</title>
+</head>
+<body>
+    <% if (login) { %>
+        <p>Bienvenido, <%= name %> | <a href="/logout">Cerrar sesión</a></p>
+    <% } else { %>
+        <p><a href="/login">Iniciar sesión</a></p>
+    <% } %>
+
+    <h1>Listado de Sucursales</h1>
+    
+    <ul>
+        <% sucursales.forEach(sucursal => { %>
+            <li>
+                <%= sucursal.nombre_sucursal %> - <%= sucursal.direccion_sucursal %> |
+                <a href="/sucursal/<%= sucursal.id_sucursal %>">Ver</a> |
+                <form action="/sucursal/<%= sucursal.id_sucursal %>?_method=PUT" method="POST" style="display: inline;">
+                    <button type="submit">Editar</button>
+                </form> |
+                <form action="/sucursal/<%= sucursal.id_sucursal %>?_method=DELETE" method="POST" style="display: inline;">
+                    <button type="submit">Eliminar</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+
+    <h2>Crear Nueva Sucursal</h2>
+    <form action="/sucursal" method="POST">
+        <label for="nombre_sucursal">Nombre de Sucursal:</label>
+        <input type="text" id="nombre_sucursal" name="nombre_sucursal" required><br>
+        
+        <label for="direccion_sucursal">Dirección de Sucursal:</label>
+        <input type="text" id="direccion_sucursal" name="direccion_sucursal" required><br>
+        
+        <button type="submit">Crear Sucursal</button>
+    </form>
+
+</body>
+</html>

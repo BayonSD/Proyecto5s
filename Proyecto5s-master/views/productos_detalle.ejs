@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= product.nombre_producto %></title>
+    <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/css/style.css">
+    <link rel="stylesheet" href="/resources/css/navbar.css">
+</head>
+<body>
+    <div class="container">
+        <%- include('navbar') %>
+        <h1><%= product.nombre_producto %></h1>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="<%= product.imagen_url %>" class="img-fluid" alt="<%= product.nombre_producto %>">
+            </div>
+            <div class="col-md-6">
+                <p><strong>Precio:</strong> <%= product.precio %></p>
+                <p><strong>Descripción:</strong> <%= product.descripcion_producto %></p>
+                <a href="/productos" class="btn btn-secondary">Volver a Productos</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
